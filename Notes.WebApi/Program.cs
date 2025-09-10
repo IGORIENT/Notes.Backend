@@ -48,13 +48,14 @@ app.MapControllers();
 #endregion
 
 #region Инициализация БД (Scope + DbInitializer)
-using (var scope = app.Services.CreateScope())
+
+using (var scope = app.Services.CreateScope()) //создается scope - временный контейнер зависимостей
 {
     var serviceProvider = scope.ServiceProvider;
     try
     {
         var context = serviceProvider.GetRequiredService<NotesDbContext>(); //Вытаскиваю из DI реализацию интерфейса INotesDbContext
-        DbInitializer.Initialize(context);
+        DbInitializer.Initialize(context);  //
     }
     catch (Exception exeption)
     {
