@@ -12,7 +12,9 @@ namespace Notes.WebApi.Middleware
 
         public CustomExceptionHandlerMiddleware(RequestDelegate next) => _next = next;
 
-        public async Task Invoke(HttpContext context)
+
+        //кого приходит http-запрос, фреймворк вызывает этот метод у каждого middleware по цепочке.
+        public async Task Invoke(HttpContext context) //как только запрос доходит до твоего middleware, ASP.NET Core вызывает Invoke(HttpContext context).
         {
             try
             {
