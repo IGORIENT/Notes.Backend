@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Notes.Persistence;
 using Notes.Application;
-using System.Reflection;
 using Notes.Application.Common.Mappings;
 using Notes.Application.Interfaces;
 using Notes.WebApi.Middleware;
+using System.Reflection;
 
 //все что здесь происходит - инициализация приложения
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,18 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin();
     });
 });
+
+builder.Services.AddAuthentication(config=>
+{
+    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer("Bearer", options => 
+    {
+        options.Authority = "https://localhost:44319/";
+        options.Audience = "NotesWebAPI";
+        options.RequireHttpsMetadata = false;
+    });
 #endregion
 
 #region построение приложения
@@ -45,6 +58,9 @@ app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseAuthentication();   //порядок важен, так как прежде чем быть авторизованым делать что-то, нужно пройти аутентификацию
+app.UseAuthorization();
+
 app.MapControllers();
 #endregion
 
