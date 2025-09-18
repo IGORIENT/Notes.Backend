@@ -10,7 +10,7 @@ namespace Notes.Persistence
     {
         public DbSet<Note> Notes { get; set;}
 
-        //конструктор 
+        //конструктор, в него подается один параметр - опции: провайдет, имя БД и др.)
         public NotesDbContext(DbContextOptions<NotesDbContext> options) : base(options) { }
 
 
