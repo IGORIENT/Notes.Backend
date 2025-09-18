@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Notes.Domain;
 using Notes.Persistence;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Notes.Tests.Common
 {
@@ -26,6 +27,7 @@ namespace Notes.Tests.Common
             // контекст проверяет, создана ли БД и все ее таблицы.
             context.Database.EnsureCreated();
 
+            // данные, с которыми будут работать тесты Update, Delete, GetList;
             context.Notes.AddRange(
                 new Note
                 {
