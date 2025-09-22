@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 #region регистрация сервисов
+
+// тут говорим, из каких сборок брат 
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));

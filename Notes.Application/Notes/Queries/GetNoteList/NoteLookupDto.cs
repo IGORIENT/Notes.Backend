@@ -16,14 +16,12 @@ namespace Notes.Application.Notes.Queries.GetNoteList
 
         public string Title { get; set; }
 
+        // как мапить (создавать) Dto из Note 
         public void Mapping(Profile profile) 
         {
             profile.CreateMap<Note, NoteLookupDto>()
-                .ForMember(noteDto => noteDto.Id, opt => opt.MapFrom(note => note.Id))
-                .ForMember(noteDto => noteDto.Title, opt => opt.MapFrom(note => note.Title));
-
-
-
+                .ForMember(noteDto => noteDto.Id, opt => opt.MapFrom(note => note.Id))          // Dto.Id = note.Id
+                .ForMember(noteDto => noteDto.Title, opt => opt.MapFrom(note => note.Title));   // Dto.Title = note.Title
         }
 
     }
