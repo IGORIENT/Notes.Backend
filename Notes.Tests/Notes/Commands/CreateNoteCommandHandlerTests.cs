@@ -4,6 +4,7 @@ using Notes.Tests.Common;
 
 namespace Notes.Tests.Notes.Commands
 {
+    // тест для создания заметки
     public class CreateNoteCommandHandlerTests : TestCommandBase
     {
         [Fact] //означает, что данный метод должен быть запущен во время прогона тестов.

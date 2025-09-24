@@ -11,10 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 #region регистрация сервисов
-builder.Services.AddAutoMapper(cfg =>
+
+// регистрация автомаппер:
+// 1) создается конфигураия AutoMapper
+// 2) регистрируется сервис IMapper в контейнере DI
+builder.Services.AddAutoMapper(cfg =>  // под капотом создается конфигурация MapperConfiguration
 {
-    cfg.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
-    cfg.AddProfile(new AssemblyMappingProfile(typeof(INotesDbContext).Assembly));
+    cfg.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly())); // возвращает только ту сборку, из которой запущен код (в данном случае Notes.WebApi)
+    cfg.AddProfile(new AssemblyMappingProfile(typeof(INotesDbContext).Assembly)); // у любого Type есть свойство Assembly
 });
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
