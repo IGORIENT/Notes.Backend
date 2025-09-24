@@ -49,7 +49,8 @@ namespace Notes.Tests.Notes.Commands
                 {
                     Id = Guid.NewGuid(),
                     UserId = NotesContextFactory.UserBId
-                }, CancellationToken.None));
+                }, 
+                CancellationToken.None));
         }
 
         [Fact]
@@ -66,8 +67,8 @@ namespace Notes.Tests.Notes.Commands
                 {
                     Id = NotesContextFactory.NoteIdForUpdate,
                     UserId = NotesContextFactory.UserAId
-                }, CancellationToken.None);
-
+                }, 
+                CancellationToken.None);
             });
                 
 
