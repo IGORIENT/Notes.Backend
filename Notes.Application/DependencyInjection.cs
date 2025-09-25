@@ -9,7 +9,7 @@ namespace Notes.Application
 {
     public static class DependencyInjection
     {
-        //метод расширение для Services
+        //метод расширение для builder.Services
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(cfg =>

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Notes.Persistence;
 using Notes.Application;
+using Notes.Persistence;
 using Notes.Application.Common.Mappings;
 using Notes.Application.Interfaces;
 using Notes.WebApi.Middleware;
@@ -20,6 +20,7 @@ builder.Services.AddAutoMapper(cfg =>  // под капотом создается конфигурация Map
     cfg.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly())); // возвращает только ту сборку, из которой запущен код (в данном случае Notes.WebApi)
     cfg.AddProfile(new AssemblyMappingProfile(typeof(INotesDbContext).Assembly)); // у любого Type есть свойство Assembly
 });
+
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddControllers();
@@ -46,6 +47,13 @@ builder.Services.AddAuthentication(config=>
         options.Audience = "NotesWebAPI";
         options.RequireHttpsMetadata = false;
     });
+
+builder.Services.AddSwaggerGen(config =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile) ;
+    config.IncludeXmlComments(xmlPath);
+});
 #endregion
 
 #region построение приложения
@@ -58,6 +66,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+app.UseSwagger();
+app.UseSwaggerUI(config =>
+{
+    config.RoutePrefix = string.Empty;
+    config.SwaggerEndpoint("swagger/v1/swagger.json", "Notes API");
+});
 app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
