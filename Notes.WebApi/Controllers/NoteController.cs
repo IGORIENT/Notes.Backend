@@ -11,8 +11,11 @@ using System.Reflection;
 
 namespace Notes.WebApi.Controllers
 {
+    //[ApiVersion("1.0")] //атрибут указания номера версии
+    //[ApiVersion("2.0")]
+    [ApiVersionNeutral] // в этом случае контроллер будет вызван даже если номер версии не указан
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/{version:apiVerion}/[controller]")]
     public class NoteController : BaseController
     {
         private readonly IMapper _mapper;

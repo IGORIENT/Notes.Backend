@@ -54,6 +54,8 @@ builder.Services.AddSwaggerGen(config =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile) ;
     config.IncludeXmlComments(xmlPath);
 });
+
+builder.Services.AddApiVersioning();
 #endregion
 
 #region построение приложения
@@ -78,7 +80,7 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();   //порядок важен, так как прежде чем быть авторизованым делать что-то, нужно пройти аутентификацию
 app.UseAuthorization();
-
+app.UseApiVersioning();
 app.MapControllers();
 #endregion
 
